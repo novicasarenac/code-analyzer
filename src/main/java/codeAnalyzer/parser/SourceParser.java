@@ -51,7 +51,7 @@ public class SourceParser {
         final MapType type = mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
         final Map<String, Object> data = mapper.readValue(setup, type);*/
     	
-    	//System.out.println(SourceParser.class.getSimpleName());
+    	System.out.println(SourceParser.class.getSimpleName());
     	Project project = new Project("aaaaa");
     	projC.create(project);
     	ComponentSide side = new ComponentSide("server", project);
