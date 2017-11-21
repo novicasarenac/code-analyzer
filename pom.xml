@@ -44,6 +44,11 @@
 			<version>1.4.4</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-neo4j</artifactId>
+			<version>5.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
 			<groupId>com.github.javaparser</groupId>
 			<artifactId>javaparser-core</artifactId>
 			<version>3.4.3</version>
