@@ -1,4 +1,4 @@
-package codeAnalyzer;
+package codeAnalyzer.model;
 
 public enum ComponentType {
 

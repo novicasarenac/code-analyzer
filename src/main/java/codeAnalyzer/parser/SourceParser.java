@@ -7,7 +7,10 @@ import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 
+import codeAnalyzer.model.Component;
+import codeAnalyzer.model.ComponentType;
 import codeAnalyzer.parser.javaParser.PackageParser;
+import codeAnalyzer.repository.ComponentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SourceParser {
+
+    @Autowired
+    private ComponentRepository componentRepository;
 
 	@Autowired
 	private PackageParser packageParser;
@@ -32,21 +38,7 @@ public class SourceParser {
         final Map<String, Object> data = mapper.readValue(setup, type);
 
         packageParser.parsePackages(sourceRoute);
-
-    	/*System.out.println(SourceParser.class.getSimpleName());
-    	Project project = new Project("aaaaa");
-    	projC.create(project);
-    	ComponentSide side = new ComponentSide("server", project);
-    	sideC.create(side);
-    	Layer layer = new Layer("controller", side);
-    	layerC.create(layer);
-    	Classs classs = new Classs("Class","",layer);
-    	classC.create(classs);
-    	Method method = new Method("getName", "String", "", classs);
-    	methodC.create(method);
-    	Section section = new Section("", 10, 20, method);
-    	sectionC.create(section);
-    	Line line = new Line("", 16, section);
-    	lineC.create(line);*/
+        Component component = new Component(ComponentType.CLASS, "User");
+        componentRepository.save(component);
     }
 }
