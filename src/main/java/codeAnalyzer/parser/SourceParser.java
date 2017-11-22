@@ -40,5 +40,8 @@ public class SourceParser {
         packageParser.parsePackages(sourceRoute);
         Component component = new Component(ComponentType.CLASS, "User");
         componentRepository.save(component);
+
+        Component comp = componentRepository.findByName("User").get(0);
+        System.out.println("Name: " + comp.getName() + " Type: " + comp.getComponentType());
     }
 }
