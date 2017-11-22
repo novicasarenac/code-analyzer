@@ -11,6 +11,7 @@ import codeAnalyzer.model.Component;
 import codeAnalyzer.model.ComponentType;
 import codeAnalyzer.model.ComponentsRelationship;
 import codeAnalyzer.parser.javaParser.PackageParser;
+import codeAnalyzer.repository.ComponentPartRepository;
 import codeAnalyzer.repository.ComponentRepository;
 import codeAnalyzer.repository.ComponentsRelationshipRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +28,9 @@ public class SourceParser {
 
     @Autowired
     private ComponentsRelationshipRepository componentsRelationshipRepository;
+
+    @Autowired
+    private ComponentPartRepository componentPartRepository;
 
 	@Autowired
 	private PackageParser packageParser;
