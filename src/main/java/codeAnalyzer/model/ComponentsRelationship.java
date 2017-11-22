@@ -21,8 +21,7 @@ public class ComponentsRelationship {
     public ComponentsRelationship() {
     }
 
-    public ComponentsRelationship(Long id, int weight, Component startNode, Component endNode) {
-        this.id = id;
+    public ComponentsRelationship(int weight, Component startNode, Component endNode) {
         this.weight = weight;
         this.startNode = startNode;
         this.endNode = endNode;

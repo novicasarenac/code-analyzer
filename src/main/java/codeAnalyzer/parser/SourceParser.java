@@ -9,8 +9,10 @@ import javax.annotation.PostConstruct;
 
 import codeAnalyzer.model.Component;
 import codeAnalyzer.model.ComponentType;
+import codeAnalyzer.model.ComponentsRelationship;
 import codeAnalyzer.parser.javaParser.PackageParser;
 import codeAnalyzer.repository.ComponentRepository;
+import codeAnalyzer.repository.ComponentsRelationshipRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class SourceParser {
 
     @Autowired
     private ComponentRepository componentRepository;
+
+    @Autowired
+    private ComponentsRelationshipRepository componentsRelationshipRepository;
 
 	@Autowired
 	private PackageParser packageParser;
@@ -38,10 +43,14 @@ public class SourceParser {
         final Map<String, Object> data = mapper.readValue(setup, type);
 
         packageParser.parsePackages(sourceRoute);
-        Component component = new Component(ComponentType.CLASS, "User");
-        componentRepository.save(component);
 
-        Component comp = componentRepository.findByName("User").get(0);
-        System.out.println("Name: " + comp.getName() + " Type: " + comp.getComponentType());
+        Component component1 = new Component(ComponentType.CLASS, "User1");
+        componentRepository.save(component1);
+
+        Component component2 = new Component(ComponentType.CLASS, "User2");
+        componentRepository.save(component2);
+
+        ComponentsRelationship componentsRelationship = new ComponentsRelationship(2, component1, component2);
+        componentsRelationshipRepository.save(componentsRelationship);
     }
 }
