@@ -44,26 +44,19 @@ public class PackageParser {
         results.get(8).getResult().get().accept(new MethodVisitor(), null);
         List<CompilationUnit> allClasses = sourceRoot.getCompilationUnits();
 
-        //Component component1 = new Component(ComponentType.CLASS, "User1");
-        //componentRepository.save(component1);
-        //Component component2 = new Component(ComponentType.CLASS, "User2");
-        //componentRepository.save(component2);
-        //ComponentsRelationship componentsRelationship = new ComponentsRelationship(2, component1, component2);
-        //componentsRelationshipRepository.save(componentsRelationship);
-
         Component rootComponent = new Component(ComponentType.ROOT, "root");
         componentRepository.save(rootComponent);
 
         for(int i=0; i<allClasses.size(); i++) {
             CompilationUnit classs = allClasses.get(i);
+            Component packageComponent = null;
 
             for(int j=0; j<classs.getChildNodes().size(); j++){
                 Node classFile = classs.getChildNodes().get(j);
-                Component packageComponent = null;
 
                 if (classFile instanceof PackageDeclaration){
                     PackageDeclaration packageNode = (PackageDeclaration) classFile;
-                    System.out.println(packageNode.getName() + " --- " + "package");
+                    System.out.println(packageNode.getNameAsString() + " --- " + "package");
 
                     packageComponent = new Component(ComponentType.PACKAGE, packageNode.getNameAsString());
                     componentRepository.save(packageComponent);
@@ -80,6 +73,10 @@ public class PackageParser {
                         ComponentsRelationship componentsRelationship =
                                 new ComponentsRelationship(2, packageComponent, classComponent);
                         componentsRelationshipRepository.save(componentsRelationship);
+                    }else{
+                        ComponentsRelationship componentsRelationship =
+                                new ComponentsRelationship(2, rootComponent, classComponent);
+                        componentsRelationshipRepository.save(componentsRelationship);
                     }
                     for (int k=0; k<classNode.getChildNodes().size(); k++){
                         Node classPart = classNode.getChildNodes().get(k);
@@ -95,9 +92,6 @@ public class PackageParser {
                                             VariableDeclarator varrr = (VariableDeclarator)varr.getChildNodes().get(p);
                                             if(varrr.getNameAsString().equals("name"))
                                                 System.out.println(varrr.getName() + "---" + "field");
-
-
-
                                         }
                                     }
 
@@ -127,15 +121,6 @@ public class PackageParser {
 
             }
         }
-        /*TokenRange token = componentClass.getTokenRange().get();
-        JavaToken start = token.getBegin();
-        while(start!=null){
-            System.out.print(start.getText());
-            if(start.getNextToken().isPresent())
-                start = start.getNextToken().get();
-            else
-                break;
-        }*/
         System.out.println("parsirano");
     }
 
