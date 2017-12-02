@@ -2,6 +2,6 @@ package codeAnalyzer.model;
 
 public enum ComponentType {
 
-    CLASS, CONTROLLER
+    ROOT, PACKAGE, CLASS, METHOD, SECTION
 
 }
