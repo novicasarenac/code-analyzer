@@ -121,11 +121,11 @@ public class PackageParser {
                                             new ComponentsRelationship(2, classComponent, methodComponent);
                                     componentsRelationshipRepository.save(componentsRelationship2);
 
-                                    SectionComponent section = new SectionComponent("if", 4, 8);
-                                    componentRepository.save(section);
-                                    ComponentsRelationship componentsRelationship3 =
-                                            new ComponentsRelationship(2, methodComponent, section);
-                                    componentsRelationshipRepository.save(componentsRelationship3);
+//                                    SectionComponent section = new SectionComponent("if", 4, 8);
+//                                    componentRepository.save(section);
+//                                    ComponentsRelationship componentsRelationship3 =
+//                                            new ComponentsRelationship(2, methodComponent, section);
+//                                    componentsRelationshipRepository.save(componentsRelationship3);
                                 }
                             }
                         }

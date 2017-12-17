@@ -15,6 +15,7 @@ import codeAnalyzer.repository.ComponentRepository;
 import codeAnalyzer.repository.ComponentsRelationshipRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,9 @@ public class SourceParser {
 	@Autowired
 	private PackageParser packageParser;
 
+	@Autowired
+    private JSONParser jsonParser;
+
     @PostConstruct
     public void startParsing() throws IOException {
         String route = "/Documents/codeAnalyzer/setup.json";
@@ -46,5 +50,18 @@ public class SourceParser {
         final Map<String, Object> data = mapper.readValue(setup, type);
 
         packageParser.parsePackages(sourceRoute);
+
+
+        String jsonString = "{\"package\": \"model\", \"class\": \"Component\", \"method\" : \"getName\"," +
+                        " \"section\" : { \"name\" : \"if\", \"startLine\" : \"5\", \"endLine\" : \"7\"} }";
+        String jsonString2 = "{\"package\": \"model\", \"class\": \"Component\", \"method\" : \"setName\"," +
+                " \"section\" : { \"name\" : \"if_else\", \"startLine\" : \"5\", \"endLine\" : \"7\"} }";
+
+
+        JSONObject jsonObj = new JSONObject(jsonString);
+        jsonParser.ParseJSON(jsonObj);
+        jsonObj = new JSONObject(jsonString2);
+        jsonParser.ParseJSON(jsonObj);
+
     }
 }
