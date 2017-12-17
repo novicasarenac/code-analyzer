@@ -10,7 +10,6 @@ import javax.annotation.PostConstruct;
 import codeAnalyzer.model.Component;
 import codeAnalyzer.model.ComponentType;
 import codeAnalyzer.model.ComponentsRelationship;
-import codeAnalyzer.parser.javaParser.PackageParser;
 import codeAnalyzer.repository.ComponentPartRepository;
 import codeAnalyzer.repository.ComponentRepository;
 import codeAnalyzer.repository.ComponentsRelationshipRepository;

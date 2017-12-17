@@ -1,4 +1,4 @@
-package codeAnalyzer.parser.javaParser;
+package codeAnalyzer.parser;
 
 import codeAnalyzer.model.Component;
 import codeAnalyzer.model.ComponentType;
@@ -15,6 +15,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
+import com.github.javaparser.ast.expr.Name;
 import com.github.javaparser.ast.expr.SimpleName;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.utils.SourceRoot;
@@ -47,6 +48,7 @@ public class PackageParser {
         Component rootComponent = new Component(ComponentType.ROOT, "root");
         componentRepository.save(rootComponent);
 
+
         for(int i=0; i<allClasses.size(); i++) {
             CompilationUnit classs = allClasses.get(i);
             Component packageComponent = null;
@@ -54,14 +56,18 @@ public class PackageParser {
             for(int j=0; j<classs.getChildNodes().size(); j++){
                 Node classFile = classs.getChildNodes().get(j);
 
-                if (classFile instanceof PackageDeclaration){
+                if (classFile instanceof PackageDeclaration) {
                     PackageDeclaration packageNode = (PackageDeclaration) classFile;
                     System.out.println(packageNode.getNameAsString() + " --- " + "package");
 
-                    packageComponent = new Component(ComponentType.PACKAGE, packageNode.getNameAsString());
-                    componentRepository.save(packageComponent);
-                    ComponentsRelationship componentsRelationship = new ComponentsRelationship(2, rootComponent, packageComponent);
-                    componentsRelationshipRepository.save(componentsRelationship);
+                    List<Component> packages = componentRepository.findByName(packageNode.getName().getIdentifier());
+                    if (packages.size() == 0) {
+                        packageComponent = new Component(ComponentType.PACKAGE, packageNode.getName().getIdentifier());
+                        componentRepository.save(packageComponent);
+                        ComponentsRelationship componentsRelationship = new ComponentsRelationship(2, rootComponent, packageComponent);
+                        componentsRelationshipRepository.save(componentsRelationship);
+                    } else
+                        packageComponent = packages.get(0);
 
                 }else if(classFile instanceof ClassOrInterfaceDeclaration){
                     ClassOrInterfaceDeclaration classNode = (ClassOrInterfaceDeclaration)classFile;
