@@ -46,14 +46,5 @@ public class SourceParser {
         final Map<String, Object> data = mapper.readValue(setup, type);
 
         packageParser.parsePackages(sourceRoute);
-
-        Component component1 = new Component(ComponentType.CLASS, "User1");
-        componentRepository.save(component1);
-
-        Component component2 = new Component(ComponentType.CLASS, "User2");
-        componentRepository.save(component2);
-
-        ComponentsRelationship componentsRelationship = new ComponentsRelationship(2, component1, component2);
-        componentsRelationshipRepository.save(componentsRelationship);
     }
 }

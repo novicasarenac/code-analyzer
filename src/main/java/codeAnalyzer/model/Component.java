@@ -13,11 +13,11 @@ public class Component {
 
     @Id
     @GeneratedValue
-    private Long id;
+    protected Long id;
 
-    private ComponentType componentType;
+    protected ComponentType componentType;
 
-    private String name;
+    protected String name;
 
     public Component() {
     }

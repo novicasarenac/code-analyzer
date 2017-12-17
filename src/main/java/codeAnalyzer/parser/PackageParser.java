@@ -3,6 +3,7 @@ package codeAnalyzer.parser;
 import codeAnalyzer.model.Component;
 import codeAnalyzer.model.ComponentType;
 import codeAnalyzer.model.ComponentsRelationship;
+import codeAnalyzer.model.SectionComponent;
 import codeAnalyzer.repository.ComponentRepository;
 import codeAnalyzer.repository.ComponentsRelationshipRepository;
 import com.github.javaparser.JavaToken;
@@ -119,6 +120,12 @@ public class PackageParser {
                                     ComponentsRelationship componentsRelationship2 =
                                             new ComponentsRelationship(2, classComponent, methodComponent);
                                     componentsRelationshipRepository.save(componentsRelationship2);
+
+                                    SectionComponent section = new SectionComponent("if", 4, 8);
+                                    componentRepository.save(section);
+                                    ComponentsRelationship componentsRelationship3 =
+                                            new ComponentsRelationship(2, methodComponent, section);
+                                    componentsRelationshipRepository.save(componentsRelationship3);
                                 }
                             }
                         }
