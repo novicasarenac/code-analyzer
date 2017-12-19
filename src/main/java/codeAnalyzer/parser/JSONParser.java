@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class JSONParser {
 
+    private static final int METHOD_SECTION_COST = 1;
 
     @Autowired
     private ComponentRepository componentRepository;
@@ -33,8 +34,6 @@ public class JSONParser {
         String methodName = (String)obj.get("method");
         Component method = componentRepository.findByName(methodName).get(0);
 
-        ComponentsRelationship relationship = new ComponentsRelationship(1, method, section);
-        componentsRelationshipRepository.save(relationship);
-        System.out.println("nestooo");
+        componentsRelationshipRepository.save(new ComponentsRelationship(METHOD_SECTION_COST, method, section));
     }
 }

@@ -40,8 +40,8 @@ public class SourceParser {
 
     @PostConstruct
     public void startParsing() throws IOException {
-        String route = "/Documents/codeAnalyzer/setup.json";
-        String sourceRoute = "/Documents/codeAnalyzer/code-analyzer/src";
+        String route = "/code/setup.json";
+        String sourceRoute = "/Code/code-analyzer/src";
         File homeDir = new File(System.getProperty("user.home"));
         String setup = new Scanner(new File(homeDir, route)).useDelimiter("\\Z").next();
 
