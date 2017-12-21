@@ -41,7 +41,7 @@ public class SourceParser {
     @PostConstruct
     public void startParsing() throws IOException {
         String route = "/code/setup.json";
-        String sourceRoute = "/Code/code-analyzer/src";
+        String sourceRoute = "/code/test/code-analyzer/src";
         File homeDir = new File(System.getProperty("user.home"));
         String setup = new Scanner(new File(homeDir, route)).useDelimiter("\\Z").next();
 
@@ -53,7 +53,7 @@ public class SourceParser {
 
 
         String jsonString = "{\"package\": \"model\", \"class\": \"Component\", \"method\" : \"getName\"," +
-                        " \"section\" : { \"name\" : \"if\", \"startLine\" : \"5\", \"endLine\" : \"7\"} }";
+                        " \"section\" : { \"name\" : \"if\", \"startLine\" : \"12\", \"endLine\" : \"15\"} }";
         String jsonString2 = "{\"package\": \"model\", \"class\": \"Component\", \"method\" : \"setName\"," +
                 " \"section\" : { \"name\" : \"if_else\", \"startLine\" : \"5\", \"endLine\" : \"7\"} }";
 
