@@ -13,6 +13,7 @@ import codeAnalyzer.model.ComponentsRelationship;
 import codeAnalyzer.repository.ComponentPartRepository;
 import codeAnalyzer.repository.ComponentRepository;
 import codeAnalyzer.repository.ComponentsRelationshipRepository;
+import codeAnalyzer.repository.SectionComponentRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import org.json.JSONObject;
@@ -38,8 +39,13 @@ public class SourceParser {
 	@Autowired
     private JSONParser jsonParser;
 
+	@Autowired
+	private SectionComponentRepository sectionComponentRepository;
+
     @PostConstruct
     public void startParsing() throws IOException {
+        componentRepository.deleteAll();
+
         String route = "/code/setup.json";
         String sourceRoute = "/code/test/code-analyzer/src";
         File homeDir = new File(System.getProperty("user.home"));
@@ -63,5 +69,11 @@ public class SourceParser {
         jsonObj = new JSONObject(jsonString2);
         jsonParser.ParseJSON(jsonObj);
 
+        String answerFile = "Layer";
+        String trueFile = "Layer";
+        int answerLine = 6;
+        int trueLine = 12;
+
+        System.out.println(sectionComponentRepository.findShortestPath(answerLine, answerFile, trueLine, trueFile));
     }
 }
