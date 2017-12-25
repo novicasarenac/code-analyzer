@@ -98,14 +98,26 @@ public class PackageParser {
                                         if (varr.getChildNodes().get(p) instanceof VariableDeclarator){
                                             VariableDeclarator varrr = (VariableDeclarator)varr.getChildNodes().get(p);
                                             if(varrr.getNameAsString().equals("name"))
-                                                System.out.println(varrr.getName() + "---" + "field");
+                                                System.out.println(classNode.getName() + "." +varrr.getName() + "---" + "field");
+                                                String fieldName = classNode.getName() + "." +varrr.getName();
+                                                Component fieldComponent = new Component(ComponentType.METHOD, fieldName);
+                                                componentRepository.save(fieldComponent);
+                                                ComponentsRelationship componentsRelationship =
+                                                        new ComponentsRelationship(2, classComponent, fieldComponent);
+                                                componentsRelationshipRepository.save(componentsRelationship);
                                         }
                                     }
 
                                 }else if(filedName instanceof VariableDeclarator){
                                     VariableDeclarator varrr = (VariableDeclarator)filedName;
                                     if(varrr.getNameAsString().equals("name"))
-                                        System.out.println(varrr.getName() + "---" + "field");
+                                        System.out.println(classNode.getName() + "." +varrr.getName() + "---" + "field");
+                                        String fieldName = classNode.getName() + "." +varrr.getName();
+                                        Component fieldComponent = new Component(ComponentType.METHOD, fieldName);
+                                        componentRepository.save(fieldComponent);
+                                        ComponentsRelationship componentsRelationship =
+                                                new ComponentsRelationship(2, classComponent, fieldComponent);
+                                        componentsRelationshipRepository.save(componentsRelationship);
                                 }
                             }
                         }else if(classPart instanceof MethodDeclaration) {
@@ -113,19 +125,14 @@ public class PackageParser {
                             for (int q = 0; q < method.getChildNodes().size(); q++) {
                                 Node methodPart = method.getChildNodes().get(q);
                                 if (methodPart instanceof SimpleName) {
-                                    System.out.println((SimpleName) methodPart + "---" + "method");
+                                    String methodName = classNode.getName() + "." +((SimpleName)methodPart).asString();
 
-                                    Component methodComponent = new Component(ComponentType.METHOD, ((SimpleName)methodPart).asString());
+                                    System.out.println(methodName);
+                                    Component methodComponent = new Component(ComponentType.METHOD, methodName);
                                     componentRepository.save(methodComponent);
                                     ComponentsRelationship componentsRelationship2 =
                                             new ComponentsRelationship(2, classComponent, methodComponent);
                                     componentsRelationshipRepository.save(componentsRelationship2);
-
-//                                    SectionComponent section = new SectionComponent("if", 4, 8);
-//                                    componentRepository.save(section);
-//                                    ComponentsRelationship componentsRelationship3 =
-//                                            new ComponentsRelationship(2, methodComponent, section);
-//                                    componentsRelationshipRepository.save(componentsRelationship3);
                                 }
                             }
                         }

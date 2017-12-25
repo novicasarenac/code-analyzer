@@ -9,4 +9,6 @@ public interface ComponentRepository extends Neo4jRepository<Component, Long> {
 
     List<Component> findByName(String name);
 
+
+
 }
