@@ -72,8 +72,9 @@ public class SourceParser {
         String answerFile = "Layer";
         String trueFile = "Layer";
         int answerLine = 6;
-        int trueLine = 12;
+        int trueLine = 13;
 
         System.out.println(sectionComponentRepository.findShortestPath(answerLine, answerFile, trueLine, trueFile));
+
     }
 }
