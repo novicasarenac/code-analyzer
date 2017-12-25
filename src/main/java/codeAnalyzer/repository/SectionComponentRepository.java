@@ -1,17 +1,9 @@
 package codeAnalyzer.repository;
 
-import codeAnalyzer.model.ComponentsRelationship;
 import codeAnalyzer.model.SectionComponent;
-import org.neo4j.driver.v1.types.Path;
-import org.neo4j.ogm.model.GraphModel;
 import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.repository.query.Param;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 
 public interface SectionComponentRepository extends Neo4jRepository<SectionComponent, Long> {
 
