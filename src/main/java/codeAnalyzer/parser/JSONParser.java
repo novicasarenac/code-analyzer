@@ -65,8 +65,7 @@ public class JSONParser {
             try {
                 component = componentRepository.findByName(componentName).get(0);
                 componentRepository.save(section);
-                ComponentsRelationship relationship = new ComponentsRelationship(METHOD_SECTION_COST, component, section);
-                componentsRelationshipRepository.save(relationship);
+                componentsRelationshipRepository.save(new ComponentsRelationship(METHOD_SECTION_COST, component, section));
             }catch (Exception e){
                 System.out.println(componentName + " - bad");
                 noGood.add(section);

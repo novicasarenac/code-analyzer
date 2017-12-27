@@ -77,35 +77,27 @@ public class PackageParser {
                         Node classPart = classNode.getChildNodes().get(k);
                         if (classPart instanceof FieldDeclaration){
                             FieldDeclaration fieldNode = (FieldDeclaration)classNode.getChildNodes().get(k);
-                            for(int q=0; q<fieldNode.getChildNodes().size(); q++){
-                                Node filedName = fieldNode.getChildNodes().get(q);
-                                if (filedName instanceof FieldDeclaration){
-                                    FieldDeclaration varr = (FieldDeclaration)filedName;
+                            for(int q = 0; q < fieldNode.getChildNodes().size(); q++){
+                                Node field = fieldNode.getChildNodes().get(q);
+                                if (field instanceof FieldDeclaration){
+                                    FieldDeclaration classField = (FieldDeclaration)field;
 
-                                    for(int p=0; p<varr.getChildNodes().size(); p++){
-                                        if (varr.getChildNodes().get(p) instanceof VariableDeclarator){
-                                            VariableDeclarator varrr = (VariableDeclarator)varr.getChildNodes().get(p);
-                                            if(varrr.getNameAsString().equals("name"))
-                                                System.out.println(classNode.getName() + "." +varrr.getName() + "---" + "field");
-                                                String fieldName = classNode.getName() + "." +varrr.getName();
-                                                Component fieldComponent = new Component(ComponentType.METHOD, fieldName);
-                                                componentRepository.save(fieldComponent);
-                                                ComponentsRelationship componentsRelationship =
-                                                        new ComponentsRelationship(2, classComponent, fieldComponent);
-                                                componentsRelationshipRepository.save(componentsRelationship);
+                                    for(int p = 0; p < classField.getChildNodes().size(); p++){
+                                        if (classField.getChildNodes().get(p) instanceof VariableDeclarator){
+                                            VariableDeclarator variable = (VariableDeclarator)classField.getChildNodes().get(p);
+                                            String fieldName = classNode.getName() + "." +variable.getName();
+                                            Component fieldComponent = new Component(ComponentType.METHOD, fieldName);
+                                            componentRepository.save(fieldComponent);
+                                            componentsRelationshipRepository.save(new ComponentsRelationship(CLASS_METHOD_COST, classComponent, fieldComponent));
                                         }
                                     }
 
-                                }else if(filedName instanceof VariableDeclarator){
-                                    VariableDeclarator varrr = (VariableDeclarator)filedName;
-                                    if(varrr.getNameAsString().equals("name"))
-                                        System.out.println(classNode.getName() + "." +varrr.getName() + "---" + "field");
-                                        String fieldName = classNode.getName() + "." +varrr.getName();
-                                        Component fieldComponent = new Component(ComponentType.METHOD, fieldName);
-                                        componentRepository.save(fieldComponent);
-                                        ComponentsRelationship componentsRelationship =
-                                                new ComponentsRelationship(2, classComponent, fieldComponent);
-                                        componentsRelationshipRepository.save(componentsRelationship);
+                                }else if(field instanceof VariableDeclarator){
+                                    VariableDeclarator variable = (VariableDeclarator)field;
+                                    String fieldName = classNode.getName() + "." +variable.getName();
+                                    Component fieldComponent = new Component(ComponentType.METHOD, fieldName);
+                                    componentRepository.save(fieldComponent);
+                                    componentsRelationshipRepository.save(new ComponentsRelationship(CLASS_METHOD_COST, classComponent, fieldComponent));
                                 }
                             }
                         }else if(classPart instanceof MethodDeclaration) {
@@ -116,12 +108,9 @@ public class PackageParser {
                                 if (methodPart instanceof SimpleName) {
                                     String methodName = classNode.getName() + "." + ((SimpleName) methodPart).asString();
 
-                                    System.out.println(methodName);
                                     Component methodComponent = new Component(ComponentType.METHOD, methodName);
                                     componentRepository.save(methodComponent);
-                                    ComponentsRelationship componentsRelationship2 =
-                                            new ComponentsRelationship(2, classComponent, methodComponent);
-                                    componentsRelationshipRepository.save(componentsRelationship2);
+                                    componentsRelationshipRepository.save(new ComponentsRelationship(CLASS_METHOD_COST, classComponent, methodComponent));
                                 }
                             }
                         }

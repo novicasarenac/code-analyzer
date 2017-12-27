@@ -29,8 +29,8 @@ public class SourceParser {
 
     @PostConstruct
     public void startParsing() throws IOException {
-        String sourceRoute = "/Downloads/students-no-security/src";
-        String jsonFilePath = "/Documents/codeAnalyzer/res";
+        String sourceRoute = "/code/students-no-security/src";
+        String jsonFilePath = "/code/res";
         File homeDir = new File(System.getProperty("user.home"));
         String jsonFile = new Scanner(new File(homeDir, jsonFilePath)).useDelimiter("\\Z").next();
 
@@ -39,8 +39,8 @@ public class SourceParser {
         JSONObject json = new JSONObject(jsonFile);
         jsonParser.ParseJSON(json);
 
-        String answerFile = "ExamController.createExam";
-        String trueFile = "ExamController.createExam";
+        String answerFile = "ExamController";
+        String trueFile = "ExamController";
         int answerLine = 60;
         int trueLine = 40;
 
@@ -48,6 +48,7 @@ public class SourceParser {
             int distance = sectionComponentRepository.findShortestPath(answerLine, answerFile, trueLine, trueFile);
             System.out.println(distance);
         }catch(Exception e){
+            e.printStackTrace();
             System.out.println("Bad file name or line number");
         }
 
